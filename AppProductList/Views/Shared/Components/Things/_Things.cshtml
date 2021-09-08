@@ -1,0 +1,30 @@
+﻿@using AppProductList.Data.Entities
+@model List<Product>
+@foreach (var product in Model)
+{
+<tr>
+    <td scope="row">@product.Id</td>
+    <td>@product.Name</td>
+    <td>@product.Price</td>
+    <td>
+        <div class="row">
+            @foreach (var img in product.ProductImages)
+            {
+                <img src="/images/@img.Name" class="col-md-2" width="60" height="60" />
+            }
+        </div>
+    </td>
+    <td class="align-middle text-left" style="font-size: 20px">
+        <a asp-action="Edit"
+           class="fas fa-pencil-alt text-info text-decoration-none cursor-pointer"
+           asp-controller="Home"
+           asp-route-id="@product.Id"></a>
+
+        <a asp-action="Delete"
+           class="fa fa-trash-alt text-danger text-decoration-none cursor-pointer"
+           asp-controller="Home"
+           asp-route-id="@product.Id"></a>
+    </td>
+</tr>
+
+}

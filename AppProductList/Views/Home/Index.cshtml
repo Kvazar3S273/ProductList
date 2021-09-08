@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container mt-4">
+    <div class="offset-2 col-8">
+        <table class="table table-striped table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <td scope="col">ID</td>
+                    <td scope="col">Назва</td>
+                    <td scope="col">Ціна</td>
+                    <td scope="col">Зображення</td>
+                    <td scope="col">Дія</td>
+                </tr>
+            </thead>
+            <tbody>
+                @await Component.InvokeAsync("Things")
+            </tbody>
+
+        </table>
+    </div>
+</div>

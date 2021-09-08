@@ -1,0 +1,32 @@
+﻿@model AppProductList.Data.Entities.Product
+
+@{
+    ViewData["Title"] = "Видалити продукт";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Ви справді хочете видалити цей продукт?</h3>
+<div>
+
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="submit" value="Видалити продукт" class="btn btn-danger" /> |
+        <a asp-action="Index">Назад до списку продуктів</a>
+    </form>
+</div>
