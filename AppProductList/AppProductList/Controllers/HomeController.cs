@@ -70,36 +70,32 @@ namespace AppProductList.Controllers
 
         [HttpGet]
         [ActionName("Delete")]
-        public IActionResult ConfirmDelete(long id)
+        public IActionResult ConfirmDelete(int id)
         {
             var selectedItem = _context.Products.FirstOrDefault(si => si.Id == id);
+            var res = _context.ProductImages.Where(r => r.ProductId == id).ToList();
+            DeletedProductImg del = new();
+            del.productViewModels = res;
             if (selectedItem != null)
             {
-                return View(selectedItem);
+                return View(del);
             }
             return NotFound();
         }
 
         [HttpPost]
-
-        public IActionResult Delete(long id)
+        public IActionResult Delete(int id)
         {
-            var deletedItem = _context.Products.FirstOrDefault(di => di.Id == id);
-            if (deletedItem != null)
+            var deletedItemProduct = _context.Products.FirstOrDefault(dip => dip.Id == id);
+            var deletedItemImage = _context.ProductImages.FirstOrDefault(dii => dii.Id == id);
+            if (deletedItemImage != null && deletedItemProduct != null)
             {
-                //var fileName = deletedItem.Image;
-                //string dir = "\\images\\";
-                //string path = _host.ContentRootPath + dir + fileName;
-                //if (System.IO.File.Exists(path))
-                //{
-                //    System.IO.File.Delete(path);
-                //}
-                _context.Products.Remove(deletedItem);
+                _context.ProductImages.Remove(deletedItemImage);
+                _context.Products.Remove(deletedItemProduct);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
             return NotFound();
-            //return Ok();
         }
 
         public IActionResult Privacy()

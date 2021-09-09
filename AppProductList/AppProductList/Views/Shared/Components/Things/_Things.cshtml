@@ -14,16 +14,14 @@
             }
         </div>
     </td>
-    <td class="align-middle text-left" style="font-size: 20px">
-        <a asp-action="Edit"
-           class="fas fa-pencil-alt text-info text-decoration-none cursor-pointer"
-           asp-controller="Home"
-           asp-route-id="@product.Id"></a>
 
-        <a asp-action="Delete"
-           class="fa fa-trash-alt text-danger text-decoration-none cursor-pointer"
-           asp-controller="Home"
-           asp-route-id="@product.Id"></a>
+    <td style="text-align:center">
+        <a class="text-success" asp-controller="Home" 
+           asp-action="Edit" 
+           asp-route-id="@product.Id"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+        <a class="text-danger " asp-controller="Home" 
+           asp-action="Delete" 
+           asp-route-id="@product.Id"><i class="fa fa-trash-alt" aria-hidden="true"></i></a>
     </td>
 </tr>
 

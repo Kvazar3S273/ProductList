@@ -73,7 +73,6 @@
 
                         for (var i = 0; i < e.target.files.length; i++) {
                             let fileName = e.target.files[i].name;
-                            //console.log("------", fileName);
                             $spanBtn = $(`<a href="#" class="b-pict__close" title="DEL">
                                         <i class="fa fa-times-circle" aria-hidden="true"></i>
                                     </a>`);
@@ -81,7 +80,6 @@
                                 $el = $(e.target);
                                 $div = $el.closest("div");
                                 $img = $div.find("img");
-                                //console.log($img);
                                 $div.remove();
                                 var files = $file[0].files;
                                 $file[0].files = files;
@@ -98,7 +96,6 @@
                             $block.prepend($blockwithImage);
                             $blockwithImage.append($spanBtn);
                         }
-                        /*$block.append($span);*/
                         $("#contentImage").prepend($block);
                     }
                 });
