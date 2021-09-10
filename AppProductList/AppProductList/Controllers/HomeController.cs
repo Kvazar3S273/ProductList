@@ -2,6 +2,7 @@
 using AppProductList.Data.Entities;
 using AppProductList.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,18 @@ namespace AppProductList.Controllers
 
         public IActionResult Index()
         {
+            var model = _context.Products
+               .Include(i => i.ProductImages)
+               .Select(x => new ProductViewModel
+               {
+                   Id = x.Id,
+                   Name = x.Name,
+                   Price = x.Price,
+                   Images = x.ProductImages.Select(t => new ProductImageItemVM
+                   {
+                       Path = "/images/" + t.Name
+                   }).ToList()
+               });
             return View();
         }
 
@@ -74,8 +87,13 @@ namespace AppProductList.Controllers
         {
             var selectedItem = _context.Products.FirstOrDefault(si => si.Id == id);
             var res = _context.ProductImages.Where(r => r.ProductId == id).ToList();
+
             DeletedProductImg del = new();
+            del.Id = selectedItem.Id;
+            del.Name = selectedItem.Name;
+            del.Price = selectedItem.Price;
             del.productViewModels = res;
+
             if (selectedItem != null)
             {
                 return View(del);
@@ -86,8 +104,8 @@ namespace AppProductList.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
+            var deletedItemImage = _context.ProductImages.FirstOrDefault(dii => dii.ProductId == id);
             var deletedItemProduct = _context.Products.FirstOrDefault(dip => dip.Id == id);
-            var deletedItemImage = _context.ProductImages.FirstOrDefault(dii => dii.Id == id);
             if (deletedItemImage != null && deletedItemProduct != null)
             {
                 _context.ProductImages.Remove(deletedItemImage);
@@ -96,6 +114,56 @@ namespace AppProductList.Controllers
                 return RedirectToAction("Index");
             }
             return NotFound();
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+
+            var resitem = _context.Products.FirstOrDefault(x => x.Id == id);
+            var resimageitem = _context.ProductImages.Where(c => c.ProductId == id).ToList();
+
+            EditedProductImg modeledit = new();
+            modeledit.Id = resitem.Id;
+            modeledit.Name = resitem.Name;
+            modeledit.Price = resitem.Price;
+            modeledit.productImages = resimageitem;
+
+            if (resitem != null)
+            {
+                return View(modeledit);
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditedProductImg modeledit)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var itemProd = _context.Products.FirstOrDefault(x => x.Id == id);
+
+                itemProd.Name = modeledit.Name;
+                itemProd.Price = modeledit.Price;
+
+                //string fileName = string.Empty;
+                //foreach (var item in modeledit.Image)
+                //{
+                //    string ext = Path.GetExtension(item.Name);
+                //    fileName = Path.GetRandomFileName() + ext;
+
+                //    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "products", fileName);
+                //    using (var stream = System.IO.File.Create(filePath))
+                //    {
+                //        await item.CopyToAsync(stream);
+                //    }
+                //}
+
+                _context.SaveChanges();
+
+            }
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()

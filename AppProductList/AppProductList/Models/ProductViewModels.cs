@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace AppProductList.Models
 {
-    public class ProductItemViewModel
+    public class ProductViewModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public List<ProductImageItemVM> Images { get; set; }
@@ -21,7 +22,19 @@ namespace AppProductList.Models
 
     public class DeletedProductImg
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
         public List<ProductImage> productViewModels { get; set; }
+    }
+
+    public class EditedProductImg
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public List<ProductImage> productImages { get; set; }
+        public List<IFormFile> Image { get; set; }
     }
 
     public class ProductAddViewModel

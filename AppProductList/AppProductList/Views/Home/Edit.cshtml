@@ -1,0 +1,52 @@
+﻿@model AppProductList.Models.EditedProductImg
+@{
+    ViewData["Title"] = "Редагування даних про користувача";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label" asp-area="admin"></label>
+                <div>
+                    <div class="col mb-3">
+                        <div class="row">
+                            @foreach (var item in Model.productImages)
+                            {
+                                <img src="/images/@item.Name" class="col-md-2 mb-2 mt-2" />
+                            }
+                        </div>
+                    </div>
+                    @*<img id="profilePicture" src="/images/@Model.Image" style="width: 150px; height: 150px;">*@
+                </div>
+                <input asp-for="Image" type="file"
+                       class="form-control"
+                       onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])">
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+
+            
+            <div class="form-group">
+                <input type="submit" value="Зберегти зміни" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

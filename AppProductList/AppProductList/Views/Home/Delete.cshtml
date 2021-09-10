@@ -8,121 +8,46 @@
 
 <h3>Ви справді хочете видалити цей продукт?</h3>
 <div>
-
     <hr />
-    <div class="row">
-        @*<dt class="col-sm-2">
+    <dl class="row">
+        <dt class="col-sm-1">
             @Html.DisplayNameFor(model => model.Id)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-11">
             @Html.DisplayFor(model => model.Id)
         </dd>
 
-        <dt class="col-sm-2">
+        <dt class="col-sm-1">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-11">
             @Html.DisplayFor(model => model.Name)
         </dd>
 
-        <dt class="col-sm-2">
+        <dt class="col-sm-1">
             @Html.DisplayNameFor(model => model.Price)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-11">
             @Html.DisplayFor(model => model.Price)
         </dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductImages)
-        </dt>*@
-        @*<dd class="col-sm-10">*@
-            <div class="mb-3">
+        <dt class="col-sm-1">
+            @Html.Display("Images")
+        </dt>
+        <dd class="col-sm-9">
+            <div class="col mb-3">
                 <div class="row">
-                    <dl>
-                        @foreach (var item in Model.productViewModels)
-                        {
-                            <dt>@item.Id</dt>
-                            <dd>
-                                <img src="/images/@item.Name"
-                                     class="col-md-2" height="60" />
-                            </dd>
-                            <dt>@item.Name</dt>
-                            <dd>@item.Product</dd>
-
-                        }
-                    </dl>
-
+                    @foreach (var item in Model.productViewModels)
+                    {
+                        <img src="/images/@item.Name" class="col-md-2 mb-2 mt-2" />
+                    }
                 </div>
             </div>
-
-
-        @*</dd>*@
-
-    </div>
+        </dd>
+    </dl>
 
     <form asp-action="Delete">
         <input type="submit" value="Видалити продукт" class="btn btn-danger" /> |
         <a asp-action="Index">Назад до списку продуктів</a>
     </form>
 </div>
-
-@*@section Scripts {
-    <script>
-
-
-
-        window.addEventListener("load", async function () {
-            let id = 1;
-            $("#btnAddImage").on("click", function () {
-                let imageName = "image" + id;
-                id++;
-                let $file = $(`<input type="file" data-files style="display:none" multiple
-                                    class="form-control"
-                                    id="${imageName}"
-                                    name="images">`);
-                $contentImage = $("#contentImage");
-                $contentImage.prepend($file);
-                let fileImageUpload = document.getElementById(imageName);
-                fileImageUpload.click();
-                fileImageUpload.onchange = function (e) {
-                    $span = $(`<span><i class="delete fa fa-lg fa-times-circle"></i></span>`);
-                    $span.on("click", function (e) {
-                        $el = $(e.target);
-                        $div = $element.closest("div");
-                        $div.remove();
-                        $file.remove();
-                    });
-                    $block = $(`<div class="d-flex flex-column-row"></div>`);
-
-                    for (var i = 0; i < e.target.files.length; i++) {
-                        let fileName = e.target.files[i].name;
-                        $spanBtn = $(`<a href="#" class="b-pict__close" title="DEL">
-                                        <i class="fa fa-times-circle" aria-hidden="true"></i>
-                                    </a>`);
-                        $spanBtn.on("click", function (e) {
-                            $el = $(e.target);
-                            $div = $el.closest("div");
-                            $img = $div.find("img");
-                            $div.remove();
-                            var files = $file[0].files;
-                            $file[0].files = files;
-                            console.log($file[0].files);
-                        });
-                        $blockwithImage = $(`<div class="b-pict col-md-2 ${fileName}" data-name="${fileName}">
-                                                </div>`);
-                        $blockwithImage.prepend(`
-                            <div class="b-pict col-md-2">
-                                <img src="${URL.createObjectURL(e.target.files[i])}"
-                                     height="100px" width="150px"/>
-                                    
-                            </div>`);
-                        $block.prepend($blockwithImage);
-                        $blockwithImage.append($spanBtn);
-                    }
-                    $("#contentImage").prepend($block);
-                }
-            });
-        });
-    </script>
-}*@
-
