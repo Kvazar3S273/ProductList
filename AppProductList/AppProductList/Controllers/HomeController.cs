@@ -120,16 +120,16 @@ namespace AppProductList.Controllers
         public IActionResult Edit(int id)
         {
 
-            var resitem = _context.Products.FirstOrDefault(x => x.Id == id);
-            var resimageitem = _context.ProductImages.Where(c => c.ProductId == id).ToList();
+            var resultItem = _context.Products.FirstOrDefault(x => x.Id == id);
+            var resultImageItem = _context.ProductImages.Where(c => c.ProductId == id).ToList();
 
             EditedProductImg modeledit = new();
-            modeledit.Id = resitem.Id;
-            modeledit.Name = resitem.Name;
-            modeledit.Price = resitem.Price;
-            modeledit.productImages = resimageitem;
+            modeledit.Id = resultItem.Id;
+            modeledit.Name = resultItem.Name;
+            modeledit.Price = resultItem.Price;
+            modeledit.productImages = resultImageItem;
 
-            if (resitem != null)
+            if (resultItem != null)
             {
                 return View(modeledit);
             }
@@ -137,31 +137,62 @@ namespace AppProductList.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, EditedProductImg modeledit)
+        public async Task<IActionResult> Edit(int id, EditedProductImg editModel)
         {
+            if(!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Не вірно введені дані");
+                return View(editModel);
+            }
 
             if (ModelState.IsValid)
             {
                 var itemProd = _context.Products.FirstOrDefault(x => x.Id == id);
 
-                itemProd.Name = modeledit.Name;
-                itemProd.Price = modeledit.Price;
+                itemProd.Name = editModel.Name;
+                itemProd.Price = editModel.Price;
 
-                //string fileName = string.Empty;
-                //foreach (var item in modeledit.Image)
-                //{
-                //    string ext = Path.GetExtension(item.Name);
-                //    fileName = Path.GetRandomFileName() + ext;
+                string fileName = string.Empty;
+                List<ProductImage> images = new List<ProductImage>();
 
-                //    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "products", fileName);
-                //    using (var stream = System.IO.File.Create(filePath))
-                //    {
-                //        await item.CopyToAsync(stream);
-                //    }
-                //}
+                if (editModel.Image!=null)
+                {
+                    foreach (var item in editModel.Image)
+                    {
+                        string ext = Path.GetExtension(item.FileName);
+                        fileName = Path.GetRandomFileName() + ext;
 
+                        string filePath = Path.Combine(Directory.GetCurrentDirectory(), "products", fileName);
+                        using (var stream = System.IO.File.Create(filePath))
+                        {
+                            await item.CopyToAsync(stream);
+                        }
+
+                        ProductImage productImage = new ProductImage
+                        {
+                            Name = fileName,
+                            Product = itemProd
+                        };
+                        images.Add(productImage);
+                    }
+                }
+
+                if (editModel.delImage != null)
+                {
+                    string pathToDel = Path.Combine(Directory.GetCurrentDirectory(), "products");
+                    foreach (var item in editModel.delImage)
+                    {
+                        var itemImage = _context.ProductImages.FirstOrDefault(x => x.Name == item);
+                        string fullPath = Path.Combine(pathToDel, itemImage.Name);
+                        if (System.IO.File.Exists(fullPath))
+                        {
+                            System.IO.File.Delete(fullPath);
+                        }
+                        _context.ProductImages.Remove(itemImage);
+                    }
+                }
+                _context.ProductImages.AddRange(images);
                 _context.SaveChanges();
-
             }
             return RedirectToAction("Index");
         }

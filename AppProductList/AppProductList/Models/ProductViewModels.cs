@@ -35,6 +35,7 @@ namespace AppProductList.Models
         public decimal Price { get; set; }
         public List<ProductImage> productImages { get; set; }
         public List<IFormFile> Image { get; set; }
+        public List<string> delImage { get; set; }
     }
 
     public class ProductAddViewModel
