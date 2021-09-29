@@ -1,5 +1,7 @@
 using AppProductList.Data;
+using System.Globalization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +28,9 @@ namespace AppProductList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddControllersWithViews()
+                .AddViewLocalization();// добавляем локализацию представлений;
             services.AddDbContext<EFAppContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
         }
@@ -42,6 +46,20 @@ namespace AppProductList
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            var supportedCultures = new[]
+            {
+                new CultureInfo("uk-UA"),
+                new CultureInfo("en"),
+                new CultureInfo("ru")
+            };
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("uk-UA"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
+
             app.UseStaticFiles();
 
             app.UseRouting();
