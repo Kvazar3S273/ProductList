@@ -29,6 +29,9 @@
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Create">@Localizer["Add"]</a>
                         </li>
                     </ul>
+                    <div>
+                        @await Html.PartialAsync("_SelectLanguagePartial")
+                    </div>
                 </div>
             </div>
         </nav>

@@ -1,8 +1,11 @@
 ﻿using AppProductList.Data;
 using AppProductList.Data.Entities;
 using AppProductList.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,13 +18,21 @@ namespace AppProductList.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IStringLocalizer<HomeController> _localizer;
+        private readonly IStringLocalizer<SharedResource> _sharedLocalizer;
         private readonly ILogger<HomeController> _logger;
+        
         public EFAppContext _context { get; set; }
 
-        public HomeController(ILogger<HomeController> logger, EFAppContext context)
+        public HomeController(ILogger<HomeController> logger, 
+                                EFAppContext context,
+                                IStringLocalizer<HomeController> localizer,
+                                IStringLocalizer<SharedResource> sharedLocalizer)
         {
             _logger = logger;
             _context = context;
+            _localizer = localizer;
+            _sharedLocalizer = sharedLocalizer;
         }
 
         public IActionResult Index()
@@ -39,6 +50,17 @@ namespace AppProductList.Controllers
                    }).ToList()
                });
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+            return LocalRedirect(returnUrl);
         }
 
         [HttpGet]

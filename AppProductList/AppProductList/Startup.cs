@@ -33,6 +33,19 @@ namespace AppProductList
                 .AddViewLocalization();// добавляем локализацию представлений;
             services.AddDbContext<EFAppContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("uk-UA"),
+                    new CultureInfo("en-US"),
+                    new CultureInfo("ru-RU")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture("uk-UA");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,18 +60,19 @@ namespace AppProductList
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            var supportedCultures = new[]
-            {
-                new CultureInfo("uk-UA"),
-                new CultureInfo("en"),
-                new CultureInfo("ru")
-            };
-            app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture("uk-UA"),
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            });
+            //var supportedCultures = new[]
+            //{
+            //    new CultureInfo("uk-UA"),
+            //    new CultureInfo("en-US"),
+            //    new CultureInfo("ru-RU")
+            //};
+            //app.UseRequestLocalization(new RequestLocalizationOptions
+            //{
+            //    DefaultRequestCulture = new RequestCulture("uk-UA"),
+            //    SupportedCultures = supportedCultures,
+            //    SupportedUICultures = supportedCultures
+            //});
+            app.UseRequestLocalization();
 
             app.UseStaticFiles();
 
