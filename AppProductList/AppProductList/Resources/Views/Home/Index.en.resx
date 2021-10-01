@@ -133,7 +133,7 @@
     <value>Back to list</value>
     <comment>Посилання</comment>
   </data>
-  <data name="Create" xml:space="preserve">
+  <data name="Createe" xml:space="preserve">
     <value>Create product</value>
     <comment>Кнопка</comment>
   </data>
@@ -144,6 +144,9 @@
   <data name="Image" xml:space="preserve">
     <value>Image</value>
     <comment>Текст на сторінці</comment>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>This message on english</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>

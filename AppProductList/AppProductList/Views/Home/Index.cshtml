@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -21,5 +22,6 @@
             </tbody>
 
         </table>
+        <h3>@Localizer["Message"]</h3>
     </div>
 </div>

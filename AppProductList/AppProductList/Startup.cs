@@ -59,7 +59,9 @@ namespace AppProductList
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            
+            app.UseCulture();
+            
             //var supportedCultures = new[]
             //{
             //    new CultureInfo("uk-UA"),
@@ -72,6 +74,7 @@ namespace AppProductList
             //    SupportedCultures = supportedCultures,
             //    SupportedUICultures = supportedCultures
             //});
+            
             app.UseRequestLocalization();
 
             app.UseStaticFiles();

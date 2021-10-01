@@ -1,12 +1,10 @@
 ﻿@model AppProductList.Models.ProductAddViewModel
-@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>@Localizer["Create"]</h1>
+<h1>Create</h1>
 
 <hr />
 <div class="row">
@@ -37,15 +35,17 @@
             </div>
 
             <div class="form-group mt-4">
-                <input type="submit" value="@Localizer["Create"]" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">@Localizer["Back"]</a>
+    <a asp-action="Index">Back</a>
 </div>
+
+
 
 @section Scripts {
     <script>
@@ -56,9 +56,9 @@
                 let imageName = "image" + id;
                 id++;
                 let $file = $(`<input type="file" data-files style="display:none" multiple
-                                                class="form-control"
-                                                id="${imageName}"
-                                                name="images">`);
+                                                    class="form-control"
+                                                    id="${imageName}"
+                                                    name="images">`);
                 $contentImage = $("#contentImage");
                 $contentImage.prepend($file);
                 let fileImageUpload = document.getElementById(imageName);
@@ -76,8 +76,8 @@
                     for (var i = 0; i < e.target.files.length; i++) {
                         let fileName = e.target.files[i].name;
                         $spanBtn = $(`<a href="#" class="b-pict__close" title="DEL">
-                                                    <i class="fa fa-times-circle" aria-hidden="true"></i>
-                                                </a>`);
+                                                        <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                                    </a>`);
                         $spanBtn.on("click", function (e) {
                             $el = $(e.target);
                             $div = $el.closest("div");
@@ -88,13 +88,13 @@
                             console.log($file[0].files);
                         });
                         $blockwithImage = $(`<div class="b-pict col-md-2 ${fileName}" data-name="${fileName}">
-                                                            </div>`);
+                                                                </div>`);
                         $blockwithImage.prepend(`
-                                        <div class="b-pict col-md-2">
-                                            <img src="${URL.createObjectURL(e.target.files[i])}"
-                                                 height="100px" width="150px"/>
+                                            <div class="b-pict col-md-2">
+                                                <img src="${URL.createObjectURL(e.target.files[i])}"
+                                                     height="100px" width="150px"/>
 
-                                        </div>`);
+                                            </div>`);
                         $block.prepend($blockwithImage);
                         $blockwithImage.append($spanBtn);
                     }

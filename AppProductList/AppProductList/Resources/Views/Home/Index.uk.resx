@@ -133,7 +133,7 @@
     <value>Назад до списку продуктів</value>
     <comment>Посилання</comment>
   </data>
-  <data name="Create" xml:space="preserve">
+  <data name="Createe" xml:space="preserve">
     <value>Створити продукт</value>
     <comment>Кнопка</comment>
   </data>
@@ -144,6 +144,9 @@
   <data name="Image" xml:space="preserve">
     <value>Зображення</value>
     <comment>Текст на сторінці</comment>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Це повідомлення українською мовою</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Назва</value>
