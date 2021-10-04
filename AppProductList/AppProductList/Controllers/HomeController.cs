@@ -32,6 +32,7 @@ namespace AppProductList.Controllers
         {
             _logger = logger;
             _context = context;
+            // Використовуємо сервіси локалізації
             _localizer = localizer;
             _sharedLocalizer = sharedLocalizer;
         }
@@ -65,6 +66,8 @@ namespace AppProductList.Controllers
         }
 
         [HttpPost]
+        // Задавання мови (в параметрах передаємо код культури
+        // і адресу, на яку потрібно вернутись після установки культури
         public IActionResult SetLanguage(string culture, string returnUrl)
         {
             Response.Cookies.Append(
