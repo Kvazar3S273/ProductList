@@ -19,6 +19,7 @@ namespace AppProductList
 
         public async Task Invoke(HttpContext context)
         {
+            // Визначаємо значення параметра для установки культури
             var lang = context.Request.Query["lang"].ToString();
             if (!string.IsNullOrEmpty(lang))
             {

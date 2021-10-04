@@ -53,6 +53,7 @@ namespace AppProductList.Controllers
             return View();
         }
 
+        // Задаємо поточну культуру
         public string GetCulture(string code = "")
         {
             if (!String.IsNullOrEmpty(code))
